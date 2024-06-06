@@ -140,9 +140,9 @@ struct ContentView: View {
                 Button("注册") {
                     if submitRegistration() {
                         print("yes")
-                        self.navigate = true
+                        navigate = true
                     } else {
-                        print("No")
+                        print("no")
                     }
                 }
                 .disabled(isDisabled)
@@ -151,10 +151,13 @@ struct ContentView: View {
                 .background(isDisabled ? Color.gray : Color.orange)
                 .cornerRadius(30)
                 .padding(.bottom, 20)
-            }
-        }.navigationDestination(isPresented: $navigate) {
-            RegisterSucceed()
-       }.navigationBarHidden(true)
+            }.navigationDestination(isPresented: $navigate) {
+                Text("注册成功!")
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+                    .bold()
+           }
+        }.navigationBarHidden(true)
     }
 
     private func submitRegistration() -> Bool {
@@ -172,7 +175,7 @@ struct ContentView: View {
     }
     
     private func validatePassword() -> Bool {
-        let passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
+        let passwordRegex = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*\\d)[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
     }
 
